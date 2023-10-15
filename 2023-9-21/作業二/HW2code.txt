@@ -1,0 +1,66 @@
+module test(a,b,cin,cout,sum0,sum1,carry0,carry1);
+input[15:0] a,b,cin;
+output [16:0] sum0,sum1,carry0,carry1;
+output cout;
+
+FA a0(.a(a[0]),.b(b[0]),.ci(cin[0]),.s(sum1[0]),.co(carry0[0]));
+FA a1(.a(a[1]),.b(b[1]),.ci(cin[1]),.s(sum0[1]),.co(carry0[1]));
+FA a2(.a(a[2]),.b(b[2]),.ci(cin[2]),.s(sum0[2]),.co(carry0[2]));
+FA a3(.a(a[3]),.b(b[3]),.ci(cin[3]),.s(sum0[3]),.co(carry0[3]));
+FA a4(.a(a[4]),.b(b[4]),.ci(cin[4]),.s(sum0[4]),.co(carry0[4]));
+FA a5(.a(a[5]),.b(b[5]),.ci(cin[5]),.s(sum0[5]),.co(carry0[5]));
+FA a6(.a(a[6]),.b(b[6]),.ci(cin[6]),.s(sum0[6]),.co(carry0[6]));
+FA a7(.a(a[7]),.b(b[7]),.ci(cin[7]),.s(sum0[7]),.co(carry0[7]));
+FA a8(.a(a[8]),.b(b[8]),.ci(cin[8]),.s(sum0[8]),.co(carry0[8]));
+FA a9(.a(a[9]),.b(b[9]),.ci(cin[9]),.s(sum0[9]),.co(carry0[9]));
+FA a10(.a(a[10]),.b(b[10]),.ci(cin[10]),.s(sum0[10]),.co(carry0[10]));
+FA a11(.a(a[11]),.b(b[11]),.ci(cin[11]),.s(sum0[11]),.co(carry0[11]));
+FA a12(.a(a[12]),.b(b[12]),.ci(cin[12]),.s(sum0[12]),.co(carry0[12]));
+FA a13(.a(a[13]),.b(b[13]),.ci(cin[13]),.s(sum0[13]),.co(carry0[13]));
+FA a14(.a(a[14]),.b(b[14]),.ci(cin[14]),.s(sum0[14]),.co(carry0[14]));
+FA a15(.a(a[15]),.b(b[15]),.ci(cin[15]),.s(sum0[15]),.co(carry0[15]));
+
+HA b0(.a(carry0[0]),.b(sum0[1]),.sum(sum1[1]),.carry(carry1[0]));
+FA b1(.a(carry0[1]),.b(sum0[2]),.ci(carry1[0]),.s(sum1[2]),.co(carry1[1]));
+FA b2(.a(carry0[2]),.b(sum0[3]),.ci(carry1[1]),.s(sum1[3]),.co(carry1[2]));
+FA b3(.a(carry0[3]),.b(sum0[4]),.ci(carry1[2]),.s(sum1[4]),.co(carry1[3]));
+FA b4(.a(carry0[4]),.b(sum0[5]),.ci(carry1[3]),.s(sum1[5]),.co(carry1[4]));
+FA b5(.a(carry0[5]),.b(sum0[6]),.ci(carry1[4]),.s(sum1[6]),.co(carry1[5]));
+FA b6(.a(carry0[6]),.b(sum0[7]),.ci(carry1[5]),.s(sum1[7]),.co(carry1[6]));
+FA b7(.a(carry0[7]),.b(sum0[8]),.ci(carry1[6]),.s(sum1[8]),.co(carry1[7]));
+FA b8(.a(carry0[8]),.b(sum0[9]),.ci(carry1[7]),.s(sum1[9]),.co(carry1[8]));
+FA b9(.a(carry0[9]),.b(sum0[10]),.ci(carry1[8]),.s(sum1[10]),.co(carry1[9]));
+FA b10(.a(carry0[10]),.b(sum0[11]),.ci(carry1[9]),.s(sum1[11]),.co(carry1[10]));
+FA b11(.a(carry0[11]),.b(sum0[12]),.ci(carry1[10]),.s(sum1[12]),.co(carry1[11]));
+FA b12(.a(carry0[12]),.b(sum0[13]),.ci(carry1[11]),.s(sum1[13]),.co(carry1[12]));
+FA b13(.a(carry0[13]),.b(sum0[14]),.ci(carry1[12]),.s(sum1[14]),.co(carry1[13]));
+FA b14(.a(carry0[14]),.b(sum0[15]),.ci(carry1[13]),.s(sum1[15]),.co(carry1[14]));
+HA b15(.a(carry1[14]),.b(carry0[15]),.sum(sum1[16]),.carry(cout));
+
+
+
+
+
+
+endmodule
+
+
+
+
+
+
+module HA(a, b, sum, carry);
+  input a, b;
+  output sum, carry;
+  assign sum = a ^ b;
+  assign carry = a & b;
+endmodule
+
+
+module FA(a,b,ci,s,co);
+	input a,b,ci;
+	output s ,co;
+	assign s=ci^a^b;
+	assign co = (a&b)|(ci&b)|(ci&a);
+endmodule
+
