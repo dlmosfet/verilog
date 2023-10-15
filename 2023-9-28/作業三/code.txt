@@ -1,0 +1,28 @@
+module wek(a_x, a_y, b_x, b_y, c_x, c_y, d_x, d_y, a_target, b_target, c_target, d_target, target_num);
+  input [3:0] a_x, a_y, b_x, b_y, c_x, c_y, d_x, d_y;
+  output [2:0] a_target, b_target, c_target, d_target, target_num;
+
+  assign a_target = data(a_x, a_y);
+  assign b_target = data(b_x, b_y);
+  assign c_target = data(c_x, c_y);
+  assign d_target = data(d_x, d_y);
+
+  assign target_num = (|a_target + |b_target + |c_target + |d_target);
+
+  function [2:0] data;
+    input [3:0] datax;
+    input [3:0] datay;
+    begin
+      if (((datax - 2) * (datax - 2) + (datay - 8) * (datay - 8)) <= 4)
+        data = 3'b001;
+      else if (((datax - 13) * (datax - 13) + (datay - 12) * (datay - 12)) <= 4)
+        data = 3'b010;
+      else if (((datax - 12) * (datax - 12) + (datay - 2) * (datay - 2)) <= 4)
+        data = 3'b011;
+      else if (((datax - 9) * (datax - 9) + (datay - 7) * (datay - 7)) <= 4)
+        data = 3'b100;
+      else
+        data = 3'b000;
+    end
+  endfunction
+endmodule
