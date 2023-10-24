@@ -2,4 +2,4 @@
 
 - quartus ii https://reurl.cc/x6Knzz
 
-- modelsim
+- modelsim https://reurl.cc/7MbODD
