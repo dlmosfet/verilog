@@ -1,0 +1,113 @@
+module test4(clk, rst, en, string, pattern, valid, match, match_index);
+
+input clk, rst, en;
+input [7:0] string;
+input [23:0]pattern;
+output reg valid, match;
+output reg [3:0] match_index;
+
+reg [1:0]CS, NS;							
+reg [3:0] index;
+reg [1:0] an;
+
+parameter EMPTY0=2'd0, STATE1=2'd1,			
+			 STATE2=2'd2, STATE3=2'd3;
+
+always @(negedge clk) begin
+	match <= 0;										
+	CS <= NS;										
+	if(rst) begin
+		index <= 0;
+		CS <= EMPTY0;
+		an <= 0;
+	end
+	else if(en) begin
+		
+		 
+		 if(CS == STATE1 && an == 0)
+		   begin
+			an<= 1;
+         match_index <= index - 1;			
+		  end else if(CS == STATE2 && an == 1)
+			begin
+			an <= 2;
+			match_index <= index - 2;	
+			end else
+			if(CS == STATE3 && an == 2)
+			begin
+			match_index <= index - 3;	
+			an <= 3;
+			end else match_index <= index;
+			if(an >=3) match_index <= match_index; 
+		    index <= index + 1;	
+		        
+	end
+	else if(index >= 9) begin					
+		valid <= 1;									
+		index <= 0;									
+		an <= 0;
+		if(CS == STATE3) begin					
+			match <= 1;    		
+		end											
+		else
+		begin
+		match <= 0;	        
+		end		
+	end
+	else begin
+	valid <= 0;
+	match_index <= 0;	
+	end
+end
+
+always @(*) begin
+	if(en) begin
+		case(CS)
+			 EMPTY0: begin
+				if(pattern[23:16] == string || pattern[23:16] == 8'h2E) begin
+					NS = STATE1;
+				end
+				else begin
+					NS = EMPTY0;
+				end
+			end
+			
+			STATE1: begin
+				if(pattern[15:8] == string || pattern[15:8] == 8'h2E) begin
+					NS = STATE2;
+				end
+				else begin
+					if(string == pattern[23:16] || pattern[23:16] == 8'h2E)
+						NS = STATE1;					
+					else									
+						NS = EMPTY0;					
+				end
+			end
+			
+			STATE2: begin
+				if(pattern[7:0] == string || pattern[7:0] == 8'h2E) begin
+					NS = STATE3;
+				end
+				else begin
+					if(pattern[23:16] == string && pattern[23:16] == pattern[15:8])
+						NS = STATE2;					
+					else if (pattern[23:16] == string && pattern[15:8] == 8'h2E)
+						NS = STATE1;					
+					else
+						NS = EMPTY0;					
+				end
+			end
+			default: begin
+				if(valid) 
+				begin
+				NS = EMPTY0;
+				end else NS = CS;							
+			end
+		endcase
+	end
+	else begin
+		NS = EMPTY0;
+	end
+end
+
+endmodule
