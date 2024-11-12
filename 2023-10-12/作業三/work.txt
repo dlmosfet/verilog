@@ -1,0 +1,124 @@
+module work(sw, reset, contin, led_out);
+input [1:0] sw;
+input reset, contin;
+output [17:0] led_out;
+
+reg [17:0] led_out;
+reg [26:0] count;
+
+always @(sw)
+begin
+	if(reset == 0)
+	begin
+		led_out <= 18'b000000000000000000;
+	end
+	else
+	begin
+		if(sw == 2'b00)
+		begin
+			led_out <= 18'b000000000000001100;
+		end
+		if(sw == 2'b01)
+		begin
+			if(contin == 0)
+			begin
+				led_out <= 18'b000000000000001100;
+			end
+		end
+		/*if(sw == 2'b00)
+		begin
+			if(contin == 0)
+			begin
+				if(count == 27'd1250000000)
+				begin
+					if(led_out >= 18'b100000000000000000)
+					begin	
+						led_out <= 18'b000000000000000000;
+					end
+					else
+					begin
+						led_out <= (led_out + 1) * 2;
+					end
+					count <= 0;
+				end
+				else
+				begin
+					count <= count + 1;
+				end
+			end
+		end
+		if(sw == 2'b01)
+		begin
+			if(contin == 0)
+			begin
+				if(count == 27'd1250000000)
+				begin	
+					if(led_out == 18'b111111111111111111)
+					begin
+						led_out <= 18'b111111111111110000;
+					end
+					else
+					begin
+						led_out <= led_out + 1;
+					end
+					count <= 0;
+				end
+				else
+				begin
+					count <= count + 1;
+				end
+			end
+		end
+		if(sw == 2'b10)
+		begin
+			if(contin == 0)
+			begin
+				if(count == 27'd1250000000) 
+				begin	
+					if(led_out == 18'b111111111111110000) 
+					begin	
+						led_out <= 18'b111111111111111111;
+					end
+					else
+					begin
+						led_out <= led_out - 1;
+					end
+					count <= 0;
+				end
+				else
+				begin
+					count <= count + 1;
+				end
+			end
+		end
+		if(sw == 2'b11)
+		begin
+			if(contin == 0)
+			begin
+				if(count == 27'd1250000000)
+				begin
+					if(led_out >= 18'd196608)
+					begin	
+						led_out <= 18'b000000000000000000;
+					end
+					else
+					begin
+						led_out <= (led_out + 1) * 4;
+					end
+					count <= 0;
+				end
+				else
+				begin
+					count <= count + 1;
+				end
+			end
+		end*/
+	end
+end
+endmodule
+
+
+				
+ 				
+		
+		
