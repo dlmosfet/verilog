@@ -1,0 +1,155 @@
+module test(SW,HEX0,HEX1,HEX2,HEX3,HEX4,HEX5,HEX6,HEX7);
+input [17:0] SW;
+output reg [6:0] HEX0,HEX1,HEX2,HEX3,HEX4,HEX5,HEX6,HEX7;
+reg [27:0] rt;
+reg [3:0] HE0,HE1,HE2,HE3,HE4,HE5,HE6,HE7;
+
+
+
+always@(*)begin
+case(SW[1:0])
+	2'b00: 
+	begin
+	HEX0=7'h0;
+	HEX1=7'h0;
+	HEX2=7'h0;
+	HEX3=7'h0;
+	HEX4=7'h0;
+	HEX5=7'h0;
+	HEX6=7'h0;
+	HEX7=7'h0;
+	end
+	2'b01: 
+	begin
+		  HEX7=NAT(SW[17:14]);
+	     HEX6=NAT(SW[13:10]);
+	     HEX5=NAT(SW[9:6]);
+	     HEX4=NAT(SW[5:2]);
+	     if(SW[17:14]<=9 && SW[13:10]<=9 && SW[9:6]<=9 && SW[5:2]<=9)
+		  begin
+		     rt=(SW[17:14]*10+SW[13:10])+(SW[9:6]*10+SW[5:2]);
+			  HE0=rt%10;
+	        HE1=(rt/10)%10;
+	        HE2=(rt/100)%10;
+	        HE3=(rt/1000)%10;
+			  HEX0=NAT(HE0);
+			  HEX1=NAT(HE1);
+			  HEX2=NAT(HE2);
+			  HEX3=NAT(HE3);
+		  end else begin
+		       HEX0=7'b0110111;
+				 HEX1=7'b1110111;
+				 HEX2=7'b0110111;
+				 HEX3=7'b0;
+		  end
+		  end
+	2'b10: 
+	begin
+		  HEX7=NAT(SW[17:14]);
+	     HEX6=NAT(SW[13:10]);
+	     HEX5=NAT(SW[9:6]);
+	     HEX4=NAT(SW[5:2]);
+		     if(SW[17:14]<=9 && SW[13:10]<=9 && SW[9:6]<=9 && SW[5:2]<=9)
+		  begin
+		  if((SW[17:14]*10+SW[13:10])>=(SW[9:6]*10+SW[5:2]))
+		  begin
+		     rt=(SW[17:14]*10+SW[13:10])-(SW[9:6]*10+SW[5:2]);
+			  HE0=rt%10;
+	        HE1=(rt/10)%10;
+	        HE2=(rt/100)%10;
+	        HE3=(rt/1000)%10;
+			  HEX0=NAT(HE0);
+			  HEX1=NAT(HE1);
+			  HEX2=NAT(HE2);
+			  HEX3=NAT(HE3);
+			  end else begin
+			  rt=(SW[9:6]*10+SW[5:2])-(SW[17:14]*10+SW[13:10]);
+			  HE0=rt%10;
+	        HE1=(rt/10)%10;
+	        HE2=(rt/100)%10;
+	        HE3=(rt/1000)%10;
+			  if(HE1==0)
+			  begin
+			  HEX0=NAT(HE0);
+			  HEX1=7'b1000000;
+			  HEX2=7'b0111111;
+			  HEX3=7'b0111111;
+			  end else if(HE2==0)
+			  begin
+			  HEX0=NAT(HE0);
+			  HEX1=NAT(HE1);
+			  HEX2=7'b1000000;
+			  HEX3=7'b0111111;
+			  end else if(HE3==0)
+			  begin
+			  HEX0=NAT(HE0);
+			  HEX1=NAT(HE1);
+			  HEX2=NAT(HE2);
+			  HEX3=7'b1000000;
+			  end
+			  end
+		  end else begin
+		       HEX0=7'b0110111;
+				 HEX1=7'b1110111;
+				 HEX2=7'b0110111;
+				 HEX3=7'b0;
+		  end
+		  end
+	2'b11: 
+	begin
+		  HEX7=NAT(SW[17:14]);
+	     HEX6=NAT(SW[13:10]);
+	     HEX5=NAT(SW[9:6]);
+	     HEX4=NAT(SW[5:2]);
+	  if(SW[17:14]<=9 && SW[13:10]<=9 && SW[9:6]<=9 && SW[5:2]<=9)
+		  begin
+		     rt=(SW[17:14]*10+SW[13:10])*(SW[9:6]*10+SW[5:2]);
+			  HE0=rt%10;
+	        HE1=(rt/10)%10;
+	        HE2=(rt/100)%10;
+	        HE3=(rt/1000)%10;
+			  HEX0=NAT(HE0);
+			  HEX1=NAT(HE1);
+			  HEX2=NAT(HE2);
+			  HEX3=NAT(HE3);
+		  end else begin
+		       HEX0=7'b0110111;
+				 HEX1=7'b1110111;
+				 HEX2=7'b0110111;
+				 HEX3=7'b0;
+		  end
+        end
+endcase
+end
+
+
+function [6:0] NAT;
+input  [3:0] CT;
+
+ case(CT)
+      4'b0000: NAT = 7'b0111111;  //0
+		4'b0001: NAT = 7'b0000110;  //1
+		4'b0010: NAT = 7'b1011011;  //2
+		4'b0011: NAT = 7'b1001111;  //3
+		4'b0100: NAT = 7'b1100110;  //4
+		4'b0101: NAT = 7'b1101101;  //5
+		4'b0110: NAT = 7'b1111101;  //6
+		4'b0111: NAT = 7'b0100111;  //7
+		4'b1000: NAT = 7'b1111111;  //8
+		4'b1001: NAT = 7'b1101111;  //9
+		4'b1010: NAT = 7'b1110111;  //10
+		4'b1011: NAT = 7'b1111111;  //11
+		4'b1100: NAT = 7'b1011000;  //12
+		4'b1101: NAT = 7'b1011110;  //13
+		4'b1110: NAT = 7'b1111001;  //14
+		4'b1111: NAT = 7'b1110001;  //15
+		default: NAT = 7'b0000000;
+	endcase
+
+endfunction
+endmodule
+
+
+
+
+

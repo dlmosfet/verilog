@@ -1,0 +1,43 @@
+m255
+K3
+13
+cModel Technology
+Z0 dC:\Users\user\Desktop\work1_1012\simulation\qsim
+vwork1
+Z1 !s100 GmhDZYZEkz]]APbYi4XcJ1
+Z2 I[Dm<i660INJW<SYoczYCj0
+Z3 VG1;D[^_LEc0]_z4APX]4d0
+Z4 dC:\Users\user\Desktop\work1_1012\simulation\qsim
+Z5 w1697270268
+Z6 8work1.vo
+Z7 Fwork1.vo
+L0 32
+Z8 OV;L;10.1d;51
+r1
+31
+Z9 !s90 -work|work|work1.vo|
+Z10 o-work work -O0
+!i10b 1
+!s85 0
+Z11 !s108 1697270268.454000
+Z12 !s107 work1.vo|
+!s101 -O0
+vwork1_vlg_vec_tst
+!i10b 1
+!s100 jVWKzleI1mXNG5QG;mb@?0
+IONbB_H4UgB5dl<Y^mE_Y:2
+Z13 VZL7DV4zZFOC2O:4l_b7SO1
+R4
+w1697270267
+Z14 8Waveform.vwf.vt
+Z15 FWaveform.vwf.vt
+L0 30
+R8
+r1
+!s85 0
+31
+!s108 1697270268.492000
+!s107 Waveform.vwf.vt|
+Z16 !s90 -work|work|Waveform.vwf.vt|
+!s101 -O0
+R10

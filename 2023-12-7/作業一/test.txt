@@ -1,0 +1,117 @@
+module test(SRAM_CE_N,SRAM_OE_N,SRAM_WE_N,SRAM_UB_N,SRAM_LB_N,SW,SRAM_ADDR,SRAM_DQ,LEDR);
+input  [0:14] SW;
+output reg SRAM_CE_N,SRAM_OE_N,SRAM_WE_N,SRAM_UB_N,SRAM_LB_N;
+inout reg[0:15] SRAM_DQ;
+output reg[0:15] LEDR;
+output reg[0:19] SRAM_ADDR;
+
+always@(*)begin
+
+  case(SW[0:2])
+	   3'b000:begin//write L
+		       SRAM_CE_N=1'b0;
+				 
+		       SRAM_WE_N=1'b0;
+				 SRAM_OE_N=1'b1;
+				 
+				 SRAM_LB_N=1'b0;
+				 SRAM_UB_N=1'b1;
+				 
+				 SRAM_ADDR[0:19]={16'b0,SW[3:6]};
+		       SRAM_DQ[0:7]=SW[7:14];
+		end
+	   3'b100:begin//en
+		       SRAM_CE_N=1'd1;
+				 
+				 SRAM_WE_N=1'b0;
+				 SRAM_OE_N=1'b1;
+				 
+				 SRAM_LB_N=1'b1;
+				 SRAM_UB_N=1'b0; 
+             SRAM_DQ[0:15]=16'hz;
+
+				 
+		end
+		3'b010:begin//READ L
+		       SRAM_CE_N=1'b0;
+				 
+		       SRAM_WE_N=1'b1;
+				 SRAM_OE_N=1'b0;
+				 
+				 SRAM_LB_N=1'b0;
+				 SRAM_UB_N=1'b0;
+				 SRAM_ADDR={16'b0,SW[3:6]};
+		       LEDR=SRAM_DQ;
+		end
+		3'b110:begin//en
+		       SRAM_CE_N=1'b1;
+				 
+				 SRAM_WE_N=1'b1;
+				 SRAM_OE_N=1'b0;
+				 
+				 SRAM_LB_N=1'b0;
+				 SRAM_UB_N=1'b1;
+				 SRAM_DQ[0:15]=16'hz;
+
+		end
+		3'b001:begin//write U
+		       SRAM_CE_N=1'b0;
+				 
+		       SRAM_WE_N=1'b0;
+				 SRAM_OE_N=1'b1;
+				 
+				 SRAM_LB_N=1'b1;
+				 SRAM_UB_N=1'b0;
+				 
+				 SRAM_ADDR[0:19]={16'b0,SW[3:6]};
+		       SRAM_DQ[8:15]=SW[7:14];
+		end
+	   3'b101:begin//en
+		       SRAM_CE_N=1'b1;
+				 
+				 SRAM_WE_N=1'b0;
+				 SRAM_OE_N=1'b1;
+				 
+				 SRAM_LB_N=1'b1;
+				 SRAM_UB_N=1'b0;
+				 SRAM_DQ[0:15]=16'hz;
+
+		end
+		3'b011:begin//READ 
+		       SRAM_CE_N=1'b0;
+				 
+		       SRAM_WE_N=1'b1;
+				 SRAM_OE_N=1'b0;
+				 
+				 SRAM_LB_N=1'b0;
+				 SRAM_UB_N=1'b0;
+				 SRAM_ADDR={16'b0,SW[3:6]};
+		       LEDR=SRAM_DQ;
+		end
+		3'b111:begin//en
+		       SRAM_CE_N=1'b1;
+				 
+				 SRAM_WE_N=1'b1;
+				 SRAM_OE_N=1'b0;
+				 
+				 SRAM_LB_N=1'b1;
+				 SRAM_UB_N=1'b0;
+				 SRAM_DQ[0:15]=16'hz;
+
+		end
+   endcase
+
+end
+
+
+
+
+
+
+
+
+
+
+
+
+endmodule
